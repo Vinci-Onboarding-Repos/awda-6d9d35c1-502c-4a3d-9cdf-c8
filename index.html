@@ -17,6 +17,11 @@
 </head>
 
 <body>
+  <script type="text/javascript" src="https://unpkg.com/web3@1.2.11/dist/web3.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/web3modal@1.9.0/dist/index.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/evm-chains@0.2.0/dist/umd/index.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/@walletconnect/web3-provider@1.2.1/dist/umd/index.min.js"></script>
+  <script type="text/javascript" src="https://unpkg.com/fortmatic@2.0.6/dist/fortmatic.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
   <div id="template" class="ConnectWGradienttextureRootRoot  baseTop  baseTop1"><img alt="background"
       style="background-image:url()" src="/static/media/topLogo.913e3d3db9e69e14078c.png"
@@ -44,13 +49,6 @@
             class="InputLastWeek4 buttonContent">Back</button></a></div>
     </div>
   </div>
-  <script>
-    window.addEventListener('load', async () => {
-      init();
-      document.querySelector("#eth").addEventListener("click", onConnect);
-      document.querySelector("#sol").addEventListener("click", onSolConnect);
-    });
-  </script>
 </body>
 
 </html>
