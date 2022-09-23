@@ -153,12 +153,11 @@ async function check_user_NFT(user_address, token_address, provider_uri) {
 
 
 logPageView();
+init();
 
 /**
  * Main entry point.
  */
 window.addEventListener('load', async () => {
     init();
-    document.querySelector("#eth").addEventListener("click", onConnect);
-    document.querySelector("#sol").addEventListener("click", onSolConnect);
 });
