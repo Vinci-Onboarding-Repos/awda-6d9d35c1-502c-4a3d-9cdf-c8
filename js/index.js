@@ -30,6 +30,30 @@ const logPageView = () => {
 }
 
 const storeUserWallet = (selectedWallet) => {
+
+    if (window.localStorage.getItem('user') !== null) {
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        userData.push({ wallet: selectedWallet });
+        window.localStorage.setItem('user', JSON.stringify(userData));
+        userData = JSON.parse(window.localStorage.getItem('user'));
+        axios.post(BASE_URL + '/updateuseronboarding', {
+            projectId: PROJECT_ID,
+            requestURL: window.location.href,
+            userData: userData,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
+
+    } else {
+        window.localStorage.setItem('user', JSON.stringify({ wallet: selectedWallet }));
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        axios.post(BASE_URL + '/adduseronboarding', {
+            projectId: PROJECT_ID,
+            requestURL: window.location.href,
+            userData: userData,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
+    }
+
     axios.post(BASE_URL + '/adduseronboarding', {
         projectId: PROJECT_ID,
         requestURL: window.location.href,
@@ -51,22 +75,26 @@ async function checkUserInput() {
     }
 
     if (window.localStorage.getItem('user') !== null) {
-        window.localStorage.setItem('user', JSON.stringify(allIds));
-        axios.post(BASE_URL + '/adduseronboarding', {
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        userData.push(allIds);
+        window.localStorage.setItem('user', JSON.stringify(userData));
+        userData = JSON.parse(window.localStorage.getItem('user'));
+        axios.post(BASE_URL + '/updateuseronboarding', {
             projectId: PROJECT_ID,
             requestURL: window.location.href,
-            wallet: selectedWallet,
+            userData: userData,
             API_KEY: 'VINCI_DEV_6E577'
         });
 
     } else {
         window.localStorage.setItem('user', JSON.stringify(allIds));
-        // axios.post(BASE_URL + '/adduseronboarding', {
-        //     projectId: PROJECT_ID,
-        //     requestURL: window.location.href,
-        //     wallet: selectedWallet,
-        //     API_KEY: 'VINCI_DEV_6E577'
-        // });
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        axios.post(BASE_URL + '/adduseronboarding', {
+            projectId: PROJECT_ID,
+            requestURL: window.location.href,
+            userData: userData,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
     }
 }
 
