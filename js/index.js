@@ -86,7 +86,7 @@ async function checkUserInput() {
         });
 
     } else {
-        allIds[id] = 'onboarding-user-' + crypto.randomUUID();
+        allIds.id = 'onboarding-user-' + crypto.randomUUID();
         window.localStorage.setItem('user', JSON.stringify(allIds));
         let userData = JSON.parse(window.localStorage.getItem('user'));
         axios.post(BASE_URL + '/adduseronboarding', {
