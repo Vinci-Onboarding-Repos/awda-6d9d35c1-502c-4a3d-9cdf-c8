@@ -9,18 +9,14 @@ const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
 
 const fetchUsers = () => {
-    console.log(window.location.href.split('/')[window.location.href.split('/').length - 1]);
-    console.log(window.location.href);
     axios.get(BASE_URL, {
         params: {
             url: window.location.href,
             API_KEY: 'VINCI_DEV_6E577'
         }, headers: { "Access-Control-Allow-Origin": "*" }
-    })
-        .then(response => {
-            const users = response.data.data;
-        })
-        .catch(error => console.error(error));
+    }).then(response => {
+        const users = response.data.data;
+    }).catch(error => console.error(error));
 };
 
 const logPageView = () => {
@@ -32,9 +28,28 @@ const logPageView = () => {
     });
 }
 
-/**
- * Setup the orchestra
- */
+const storeUserWallet = (selectedWallet) => {
+    axios.post(BASE_URL + '/adduseronboarding', {
+        projectId: PROJECT_ID,
+        requestURL: window.location.href,
+        wallet: selectedWallet,
+        API_KEY: 'VINCI_DEV_6E577'
+    });
+}
+
+const checkUserInput = () => {
+    var allElements = document.querySelectorAll('*[id]');
+    var allIds = [];
+    for (var i = 0, n = allElements.length; i < n; ++i) {
+        var el = allElements[i];
+        if (el.id) {
+            allIds.push({ [el.id]: el.innerHTML });
+        }
+    }
+
+    console.log(allIds);
+}
+
 function init() {
     const providerOptions = {
         walletconnect: {
@@ -64,12 +79,9 @@ function getProvider() {
 }
 
 async function refreshAccountData(event) {
-
     await fetchAccountData(provider, event);
 }
-/**
- * Connect wallet button pressed.
- */
+
 async function onConnect(event) {
     console.log("Opening a dialog", web3Modal);
     try {
@@ -100,11 +112,11 @@ async function onSolConnect(event) {
             console.log(resp.publicKey.toString());
             const connectButton = document.getElementById("sol");
             connectButton.innerHTML = window.solana.publicKey;
-            console.log(provider);
             status.innerHTML = provider.isConnected.toString();
             const data = document.querySelector("#sol");
             const res = check_user_NFT(resp.publicKey.toString(), data.dataset.address)
             if (res) {
+                storeUserWallet(resp.publicKey.toString());
                 location.href = data.dataset.href;
             }
         });
@@ -113,51 +125,36 @@ async function onSolConnect(event) {
     }
 }
 
-/**
- * Kick in the UI action after Web3modal dialog has chosen a provider
- */
 async function fetchAccountData(event) {
-    // Get a Web3 instance for the wallet
     const web3 = new Web3(provider);
-    console.log("Web3 instance is", web3);
-    // Get connected chain id from Ethereum node
-    const chainId = await web3.eth.getChainId();
-    // Load chain information over an HTTP API
-    const chainData = evmChains.getChain(chainId);
-    // Get list of accounts of the connected wallet
     const accounts = await web3.eth.getAccounts();
-    // MetaMask does not give you all accounts, only the selected account
-    console.log("Got accounts", accounts);
     selectedAccount = accounts[0];
     const data = document.querySelector("#eth");
     const res = check_user_NFT(selectedAccount, data.dataset.address)
     if (res) {
+        storeUserWallet(selectedAccount);
         location.href = data.dataset.href;
     }
 }
-
 
 async function check_user_NFT(user_address, token_address, provider_uri) {
     const opensea_uri = 'https://api.opensea.io/api/v1/assets?owner=' + user_address;
     const response = await axios.get(opensea_uri);
     const data = response.data.assets;
-    console.log(data);
     for (var i = 0; i < data.length; i++) {
         if (data[i].asset_contract.address === token_address) {
-            console.log('true');
             return true;
         }
     }
+    document.getElementById("error-text").innerHTML = "You don't have the necessary Token";
     return false;
 }
 
-
 logPageView();
+checkUserInput();
 init();
 
-/**
- * Main entry point.
- */
+
 window.addEventListener('load', async () => {
     init();
 });
