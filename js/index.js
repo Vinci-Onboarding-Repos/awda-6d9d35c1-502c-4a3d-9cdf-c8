@@ -37,7 +37,7 @@ const storeUserWallet = (selectedWallet) => {
     });
 }
 
-const checkUserInput = () => {
+function checkUserInput() {
     var allElements = document.querySelectorAll('*[id]');
     var allIds = [];
     for (var i = 0, n = allElements.length; i < n; ++i) {
