@@ -54,13 +54,6 @@ const storeUserWallet = (selectedWallet) => {
             API_KEY: 'VINCI_DEV_6E577'
         });
     }
-
-    axios.post(BASE_URL + '/adduseronboarding', {
-        projectId: PROJECT_ID,
-        requestURL: window.location.href,
-        wallet: selectedWallet,
-        API_KEY: 'VINCI_DEV_6E577'
-    });
 }
 
 async function checkUserInput() {
