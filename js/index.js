@@ -7,7 +7,7 @@ const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
-const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "input", "eth", "sol"];
+const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol"];
 
 const fetchUsers = () => {
     axios.get(BASE_URL, {
@@ -39,9 +39,7 @@ const storeUserWallet = (selectedWallet) => {
 }
 
 async function checkUserInput() {
-    console.log("allIds");
     var allElements = document.querySelectorAll('*[id]');
-    console.log(allElements);
     var allIds = [];
     for (var i = 0, n = allElements.length; i < n; ++i) {
         var el = allElements[i];
@@ -52,7 +50,24 @@ async function checkUserInput() {
         }
     }
 
-    console.log(allIds);
+    if (window.localStorage.getItem('user') !== null) {
+        window.localStorage.setItem('user', JSON.stringify(allIds));
+        axios.post(BASE_URL + '/adduseronboarding', {
+            projectId: PROJECT_ID,
+            requestURL: window.location.href,
+            wallet: selectedWallet,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
+
+    } else {
+        window.localStorage.setItem('user', JSON.stringify(allIds));
+        // axios.post(BASE_URL + '/adduseronboarding', {
+        //     projectId: PROJECT_ID,
+        //     requestURL: window.location.href,
+        //     wallet: selectedWallet,
+        //     API_KEY: 'VINCI_DEV_6E577'
+        // });
+    }
 }
 
 function init() {
@@ -88,7 +103,6 @@ async function refreshAccountData(event) {
 }
 
 async function onConnect(event) {
-    console.log("Opening a dialog", web3Modal);
     try {
         provider = await web3Modal.connect();
     } catch (e) {
