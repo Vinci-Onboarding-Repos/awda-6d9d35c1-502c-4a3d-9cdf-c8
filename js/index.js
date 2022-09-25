@@ -38,7 +38,9 @@ const storeUserWallet = (selectedWallet) => {
 }
 
 function checkUserInput() {
+    console.log("allIds");
     var allElements = document.querySelectorAll('*[id]');
+    console.log(allElements);
     var allIds = [];
     for (var i = 0, n = allElements.length; i < n; ++i) {
         var el = allElements[i];
@@ -151,7 +153,6 @@ async function check_user_NFT(user_address, token_address, provider_uri) {
 }
 
 logPageView();
-checkUserInput();
 init();
 
 
