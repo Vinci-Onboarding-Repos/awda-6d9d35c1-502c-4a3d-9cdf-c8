@@ -33,6 +33,7 @@ const storeUserWallet = (selectedWallet) => {
 
     if (window.localStorage.getItem('user') !== null) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
+        console.log(userData)
         userData.wallet = selectedWallet;
         window.localStorage.setItem('user', JSON.stringify(userData));
         userData = JSON.parse(window.localStorage.getItem('user'));
