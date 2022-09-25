@@ -75,18 +75,21 @@ async function checkUserInput() {
     }
 
     if (window.localStorage.getItem('user') !== null) {
-        let userData = JSON.parse(window.localStorage.getItem('user'));
+        let userDataOld = JSON.parse(window.localStorage.getItem('user'));
         userData.push(allIds);
         window.localStorage.setItem('user', JSON.stringify(userData));
-        userData = JSON.parse(window.localStorage.getItem('user'));
+        let userData = JSON.parse(window.localStorage.getItem('user'));
         axios.post(BASE_URL + '/updateuseronboarding', {
             projectId: PROJECT_ID,
             requestURL: window.location.href,
             userData: userData,
+            userDataOld: userDataOld,
             API_KEY: 'VINCI_DEV_6E577'
         });
 
     } else {
+        allIds.push({ id: 'onboarding-user' + crypto.randomUUID() });
+        console.log(allIds)
         window.localStorage.setItem('user', JSON.stringify(allIds));
         let userData = JSON.parse(window.localStorage.getItem('user'));
         axios.post(BASE_URL + '/adduseronboarding', {
