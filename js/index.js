@@ -33,7 +33,7 @@ const storeUserWallet = (selectedWallet) => {
 
     if (window.localStorage.getItem('user') !== null) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
-        userData.push({ wallet: selectedWallet });
+        userData[wallet] = selectedWallet;
         window.localStorage.setItem('user', JSON.stringify(userData));
         userData = JSON.parse(window.localStorage.getItem('user'));
         axios.post(BASE_URL + '/updateuseronboarding', {
@@ -44,8 +44,8 @@ const storeUserWallet = (selectedWallet) => {
         });
 
     } else {
-        window.localStorage.setItem('user', JSON.stringify({ wallet: selectedWallet }));
-        let userData = JSON.parse(window.localStorage.getItem('user'));
+        const userData = { wallet: selectedWallet, id: 'onboarding-user-' + crypto.randomUUID() };
+        window.localStorage.setItem('user', userData);
         axios.post(BASE_URL + '/adduseronboarding', {
             projectId: PROJECT_ID,
             requestURL: window.location.href,
@@ -64,32 +64,29 @@ const storeUserWallet = (selectedWallet) => {
 
 async function checkUserInput() {
     var allElements = document.querySelectorAll('*[id]');
-    var allIds = [];
+    var allIds = {};
     for (var i = 0, n = allElements.length; i < n; ++i) {
         var el = allElements[i];
         if (!ignore.includes(el.id)) {
             if (el.id) {
-                allIds.push({ [el.id]: el.value });
+                allIds[el.id] = el.value;
             }
         }
     }
 
     if (window.localStorage.getItem('user') !== null) {
         let userData = JSON.parse(window.localStorage.getItem('user'));
-        userData.push(allIds);
-        console.log('onboarding-user' + crypto.randomUUID())
-        window.localStorage.setItem('user', JSON.stringify(userData));
-        userData = JSON.parse(window.localStorage.getItem('user'));
+        let merged = { ...userData, ...allIds };
+        window.localStorage.setItem('user', JSON.stringify(merged));
         axios.post(BASE_URL + '/updateuseronboarding', {
             projectId: PROJECT_ID,
             requestURL: window.location.href,
-            userData: userData,
+            userData: merged,
             API_KEY: 'VINCI_DEV_6E577'
         });
 
     } else {
-        allIds.push({ id: 'onboarding-user' + crypto.randomUUID() });
-        console.log(allIds)
+        allIds[id] = 'onboarding-user-' + crypto.randomUUID();
         window.localStorage.setItem('user', JSON.stringify(allIds));
         let userData = JSON.parse(window.localStorage.getItem('user'));
         axios.post(BASE_URL + '/adduseronboarding', {
