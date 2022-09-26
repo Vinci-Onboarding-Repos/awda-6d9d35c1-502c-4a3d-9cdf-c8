@@ -19,19 +19,22 @@ const fetchUsers = () => {
     }).catch(error => console.error(error));
 };
 
-const logPageView = () => {
-
-    const country = fetch('https://extreme-ip-lookup.com/json/?key=X3he8u0UQopySwA6qesC')
+async function country() {
+    return fetch('https://extreme-ip-lookup.com/json/?key=X3he8u0UQopySwA6qesC')
         .then(res => res.json())
-        .then(response => {
-            return response.country;
-        })
+}
+
+const logPageView = async () => {
+
+    const country = await country();
+    console.log(country)
+    console.log(country.country)
     if (PROJECT_ID === "awda-6d9d35c1-502c-4a3d-9cdf-c8") return;
     var pathArray = window.location.pathname.split('/');
     axios.post(BASE_URL + '/onboardingview', {
         projectId: pathArray[1],
         requestURL: window.location.href,
-        location: country,
+        location: country.country,
         API_KEY: 'VINCI_DEV_6E577'
     });
 }
