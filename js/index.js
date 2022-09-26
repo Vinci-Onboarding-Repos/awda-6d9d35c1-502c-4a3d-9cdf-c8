@@ -1,5 +1,3 @@
-const { Console } = require("console");
-
 const VINCI_ENV = sessionStorage.getItem('vinciEnv');
 const BASE_URL = VINCI_ENV === 'dev' ? 'http://localhost:5001/vinci-dev-6e577/us-central1/api/public' :
     'https://us-central1-vinci-dev-6e577.cloudfunctions.net/api/public';
