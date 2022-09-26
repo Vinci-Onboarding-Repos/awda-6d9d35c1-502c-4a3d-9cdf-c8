@@ -63,7 +63,7 @@ async function checkUserInput() {
         var el = allElements[i];
         if (!ignore.includes(el.id)) {
             if (el.id) {
-                allIds[el.id] = el.value;
+                allIds[el.id.toString()] = el.value;
             }
         }
     }
