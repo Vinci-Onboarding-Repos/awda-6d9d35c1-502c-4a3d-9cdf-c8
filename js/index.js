@@ -21,9 +21,10 @@ const fetchUsers = () => {
 
 const logPageView = () => {
     if (PROJECT_ID === "awda-6d9d35c1-502c-4a3d-9cdf-c8") return;
-    console.log(window.location.href)
+    var pathArray = window.location.pathname.split('/');
+    console.log(pathArray[0])
     axios.post(BASE_URL + '/onboardingview', {
-        projectId: PROJECT_ID,
+        projectId: pathArray[0],
         requestURL: window.location.href,
         API_KEY: 'VINCI_DEV_6E577'
     });
@@ -37,8 +38,9 @@ const storeUserWallet = (selectedWallet) => {
         userData.wallet = selectedWallet;
         window.localStorage.setItem('user', JSON.stringify(userData));
         userData = JSON.parse(window.localStorage.getItem('user'));
+        var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/updateuseronboarding', {
-            projectId: PROJECT_ID,
+            projectId: pathArray[0],
             requestURL: window.location.href,
             userData: userData,
             API_KEY: 'VINCI_DEV_6E577'
@@ -48,8 +50,9 @@ const storeUserWallet = (selectedWallet) => {
         const userData = { wallet: selectedWallet, id: 'onboarding-user-' + crypto.randomUUID() };
         console.log(userData)
         window.localStorage.setItem('user', userData);
+        var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/adduseronboarding', {
-            projectId: PROJECT_ID,
+            projectId: pathArray[0],
             requestURL: window.location.href,
             userData: userData,
             API_KEY: 'VINCI_DEV_6E577'
@@ -73,8 +76,9 @@ async function checkUserInput() {
         let userData = JSON.parse(window.localStorage.getItem('user'));
         let merged = { ...userData, ...allIds };
         window.localStorage.setItem('user', JSON.stringify(merged));
+        var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/updateuseronboarding', {
-            projectId: PROJECT_ID,
+            projectId: pathArray[0],
             requestURL: window.location.href,
             userData: merged,
             API_KEY: 'VINCI_DEV_6E577'
@@ -84,8 +88,9 @@ async function checkUserInput() {
         allIds.id = 'onboarding-user-' + crypto.randomUUID();
         window.localStorage.setItem('user', JSON.stringify(allIds));
         let userData = JSON.parse(window.localStorage.getItem('user'));
+        var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/adduseronboarding', {
-            projectId: PROJECT_ID,
+            projectId: pathArray[0],
             requestURL: window.location.href,
             userData: userData,
             API_KEY: 'VINCI_DEV_6E577'
