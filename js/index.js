@@ -26,15 +26,15 @@ async function country() {
 
 const logPageView = async () => {
 
-    const country = await country();
-    console.log(country)
-    console.log(country.country)
+    const countryR = await country();
+    console.log(countryR)
+    console.log(countryR.country)
     if (PROJECT_ID === "awda-6d9d35c1-502c-4a3d-9cdf-c8") return;
     var pathArray = window.location.pathname.split('/');
     axios.post(BASE_URL + '/onboardingview', {
         projectId: pathArray[1],
         requestURL: window.location.href,
-        location: country.country,
+        location: countryR.country,
         API_KEY: 'VINCI_DEV_6E577'
     });
 }
