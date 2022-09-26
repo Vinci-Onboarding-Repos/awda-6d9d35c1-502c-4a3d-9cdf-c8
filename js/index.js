@@ -22,7 +22,7 @@ const fetchUsers = () => {
 const logPageView = () => {
     if (PROJECT_ID === "awda-6d9d35c1-502c-4a3d-9cdf-c8") return;
     var pathArray = window.location.pathname.split('/');
-    console.log(window.location.pathname)
+    console.log(window.location)
     console.log(pathArray[0])
     axios.post(BASE_URL + '/onboardingview', {
         projectId: pathArray[0],
