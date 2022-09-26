@@ -1,7 +1,7 @@
 const VINCI_ENV = sessionStorage.getItem('vinciEnv');
 const BASE_URL = VINCI_ENV === 'dev' ? 'http://localhost:5001/vinci-dev-6e577/us-central1/api/public' :
     'https://us-central1-vinci-dev-6e577.cloudfunctions.net/api/public';
-const PROJECT_ID = 'teste-e40fae4e-e910-4905-b21d-7'
+const PROJECT_ID = ''
 const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const Fortmatic = window.Fortmatic;
@@ -21,6 +21,7 @@ const fetchUsers = () => {
 
 const logPageView = () => {
     if (PROJECT_ID === "awda-6d9d35c1-502c-4a3d-9cdf-c8") return;
+    console.log(window.location.href)
     axios.post(BASE_URL + '/onboardingview', {
         projectId: PROJECT_ID,
         requestURL: window.location.href,
