@@ -69,7 +69,8 @@ async function checkUserInput() {
     }
 
     if (window.localStorage.getItem('user') !== null) {
-        let userData = JSON.parse(window.localStorage.getItem('user'));
+        let userData = window.localStorage.getItem('user').user;
+        console.log(userData)
         let merged = { ...userData, ...allIds };
         window.localStorage.setItem('user', JSON.stringify(merged));
         axios.post(BASE_URL + '/updateuseronboarding', {
