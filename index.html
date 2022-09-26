@@ -8,6 +8,19 @@
 
   <script>
     window.addEventListener('load', async () => {
+      const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text"];
+      var allElements = document.querySelectorAll('*[id]');
+      var allIds = {};
+      for (var i = 0, n = allElements.length; i < n; ++i) {
+        var el = allElements[i];
+        if (!ignore.includes(el.id)) {
+          console.log(el.tagName)
+          if (el.id && el.tagName === "BUTTON") {
+            document.querySelector("#" + el.id).addEventListener("click", addUserDecision);
+          }
+        }
+      }
+      console.log(allIds)
       init();
       document.querySelector("#eth").addEventListener("click", onConnect);
       document.querySelector("#inputNext").addEventListener("click", checkUserInput);
@@ -48,7 +61,10 @@
         </div>
       </div>
       <input id="ola"></input>
-      <button style="background-color:#0d1121" id="inputNext" data-href="screen-ac0d6572-a4c3-495d-b66e-e3eda80202f0" class="InputLastWeek4 buttonContent">Back</button>
+      <button style="background-color:#0d1121" id="developer" data-href="screen-ac0d6572-a4c3-495d-b66e-e3eda80202f0"
+        class="InputLastWeek4 buttonContent">Back</button>
+      <button style="background-color:#0d1121" id="inputNext" data-href="screen-ac0d6572-a4c3-495d-b66e-e3eda80202f0"
+        class="InputLastWeek4 buttonContent">Back</button>
       <div class="InputFlexRow1 row2"><a href="#"><button style="background-color:#0d1121"
             class="InputLastWeek4 buttonContent">Back</button></a></div>
     </div>

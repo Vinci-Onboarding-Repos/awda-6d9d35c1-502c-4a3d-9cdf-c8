@@ -6,7 +6,7 @@ const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
 const Fortmatic = window.Fortmatic;
 const evmChains = window.evmChains;
-const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol"];
+const ignore = ["WEB3_CONNECT_MODAL_ID", "template", "inputNext", "eth", "sol", "error-text"];
 
 const fetchUsers = () => {
     axios.get(BASE_URL, {
@@ -118,9 +118,49 @@ async function checkUserInput() {
             API_KEY: 'VINCI_DEV_6E577'
         });
     }
-    
+
     const data = document.querySelector("#inputNext");
     location.href = data.dataset.href;
+}
+
+async function addUserDecision(event) {
+    console.log(event.target.id);  // Get ID of Clicked Element
+
+    if (window.localStorage.getItem('user') !== null) {
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        let merged = { ...userData, ...{ type: event.target.id } };
+        window.localStorage.setItem('user', JSON.stringify(merged));
+        var pathArray = window.location.pathname.split('/');
+        axios.post(BASE_URL + '/updateuseronboarding', {
+            projectId: pathArray[1],
+            requestURL: window.location.href,
+            userData: merged,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
+
+    } else {
+
+        const country = fetch('https://extreme-ip-lookup.com/json/?key=X3he8u0UQopySwA6qesC')
+            .then(res => res.json())
+            .then(response => {
+                return response.country;
+            })
+        allIds.country = country;
+        allIds.id = 'onboarding-user-' + crypto.randomUUID();
+        window.localStorage.setItem('user', JSON.stringify({ type: event.target.id }));
+        let userData = JSON.parse(window.localStorage.getItem('user'));
+        var pathArray = window.location.pathname.split('/');
+        axios.post(BASE_URL + '/adduseronboarding', {
+            projectId: pathArray[1],
+            requestURL: window.location.href,
+            userData: userData,
+            API_KEY: 'VINCI_DEV_6E577'
+        });
+    }
+    
+
+    const data = document.querySelector("#inputNext");
+    // location.href = data.dataset.href;
 }
 
 function init() {
