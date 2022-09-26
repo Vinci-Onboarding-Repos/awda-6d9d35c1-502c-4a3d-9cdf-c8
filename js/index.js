@@ -23,7 +23,8 @@ const logPageView = () => {
     if (PROJECT_ID === "awda-6d9d35c1-502c-4a3d-9cdf-c8") return;
     var pathArray = window.location.pathname.split('/');
     console.log(window.location.pathname)
-    console.log(pathArray[0])
+    console.log(pathArray)
+    console.log(pathArray[1])
     axios.post(BASE_URL + '/onboardingview', {
         projectId: pathArray[0],
         requestURL: window.location.href,
