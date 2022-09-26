@@ -73,6 +73,7 @@ async function checkUserInput() {
     if (window.localStorage.getItem('user') !== null) {
         let userData = window.localStorage.getItem('user');
         console.log(allIds)
+        console.log(userData)
         let merged = { ...userData, ...allIds };
         console.log(merged)
         window.localStorage.setItem('user', JSON.stringify(merged));
