@@ -22,6 +22,15 @@ const fetchUsers = () => {
 const logPageView = () => {
     if (PROJECT_ID === "awda-6d9d35c1-502c-4a3d-9cdf-c8") return;
     var pathArray = window.location.pathname.split('/');
+
+    fetch('https://extreme-ip-lookup.com/json/?key=X3he8u0UQopySwA6qesC')
+        .then(res => res.json())
+        .then(response => {
+            console.log("Country: ", response.country);
+        })
+        .catch((data, status) => {
+            console.log('Request failed');
+        })
     console.log(window.location.pathname)
     console.log(json.ip)
     console.log(pathArray[1])
