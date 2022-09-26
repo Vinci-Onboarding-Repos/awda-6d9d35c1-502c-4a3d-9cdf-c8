@@ -1,3 +1,4 @@
+const { Console } = require("console");
 
 const VINCI_ENV = sessionStorage.getItem('vinciEnv');
 const BASE_URL = VINCI_ENV === 'dev' ? 'http://localhost:5001/vinci-dev-6e577/us-central1/api/public' :
@@ -46,6 +47,7 @@ const storeUserWallet = (selectedWallet) => {
 
     } else {
         const userData = { wallet: selectedWallet, id: 'onboarding-user-' + crypto.randomUUID() };
+        console.log(userData)
         window.localStorage.setItem('user', userData);
         axios.post(BASE_URL + '/adduseronboarding', {
             projectId: PROJECT_ID,
