@@ -26,7 +26,7 @@ const logPageView = () => {
     console.log(pathArray)
     console.log(pathArray[1])
     axios.post(BASE_URL + '/onboardingview', {
-        projectId: pathArray[0],
+        projectId: pathArray[1],
         requestURL: window.location.href,
         API_KEY: 'VINCI_DEV_6E577'
     });
@@ -42,7 +42,7 @@ const storeUserWallet = (selectedWallet) => {
         userData = JSON.parse(window.localStorage.getItem('user'));
         var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/updateuseronboarding', {
-            projectId: pathArray[0],
+            projectId: pathArray[1],
             requestURL: window.location.href,
             userData: userData,
             API_KEY: 'VINCI_DEV_6E577'
@@ -54,7 +54,7 @@ const storeUserWallet = (selectedWallet) => {
         window.localStorage.setItem('user', userData);
         var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/adduseronboarding', {
-            projectId: pathArray[0],
+            projectId: pathArray[1],
             requestURL: window.location.href,
             userData: userData,
             API_KEY: 'VINCI_DEV_6E577'
@@ -80,7 +80,7 @@ async function checkUserInput() {
         window.localStorage.setItem('user', JSON.stringify(merged));
         var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/updateuseronboarding', {
-            projectId: pathArray[0],
+            projectId: pathArray[1],
             requestURL: window.location.href,
             userData: merged,
             API_KEY: 'VINCI_DEV_6E577'
@@ -92,7 +92,7 @@ async function checkUserInput() {
         let userData = JSON.parse(window.localStorage.getItem('user'));
         var pathArray = window.location.pathname.split('/');
         axios.post(BASE_URL + '/adduseronboarding', {
-            projectId: pathArray[0],
+            projectId: pathArray[1],
             requestURL: window.location.href,
             userData: userData,
             API_KEY: 'VINCI_DEV_6E577'
